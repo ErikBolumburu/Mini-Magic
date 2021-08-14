@@ -9,13 +9,19 @@ public class PlayerBullet : MonoBehaviour
    public float bulletSpeed;
    public float bulletDamage;
    private Vector2 mousePos;
+   private Vector2 shootDirection;
 
     public void Start() {
         rb = GetComponent<Rigidbody2D>();
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 mouseDirection = mousePos - new Vector2(transform.position.x, transform.position.y);
-        mouseDirection.Normalize();
-        rb.velocity = mouseDirection * bulletSpeed;
+        if(Input.GetAxis("RSHorizontal") != 0 || Input.GetAxis("RSVertical") != 0){
+            shootDirection = new Vector2(Input.GetAxis("RSHorizontal"), Input.GetAxis("RSVertical"));
+        }
+        else{
+            shootDirection = mousePos - new Vector2(transform.position.x, transform.position.y);
+            shootDirection.Normalize();
+        }
+        rb.velocity = shootDirection * bulletSpeed;
    }
 
     void OnTriggerEnter2D(Collider2D col){

@@ -11,13 +11,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private Animator animator;
-    public InputControl inputControl;
     
     [Header("Movement")]
     private float defaultMoveSpeed;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float OnHitBuffTime;
     [SerializeField] private float moveSpeedOnHit;
+
     private bool invincible;
 
     private float horizontal;
@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public float basicAttackCooldown = 1;
     private float nextFireTime = 0;
 
+
     void Awake(){
     }
 
@@ -53,19 +54,27 @@ public class PlayerController : MonoBehaviour
         PlayerDeath();
         InvincibleBuffs();
         FlipSprite();
+
     }
 
     void GetMovementInput(){
         // Called in Update()
         if(!isDead){
-            horizontal = Input.GetAxisRaw("Horizontal");
-            vertical = Input.GetAxisRaw("Vertical");
+            if(Input.GetAxis("XHorizontal") != 0 || Input.GetAxis("XVertical") != 0){
+                horizontal = Input.GetAxisRaw("XHorizontal");
+                vertical = Input.GetAxisRaw("XVertical");
+            }
+            else{
+                horizontal = Input.GetAxisRaw("Horizontal");
+                vertical = Input.GetAxisRaw("Vertical");
+            }
         }
         else{
             horizontal = 0f;
             vertical = 0f;
         }
     }
+
 
     void PlayerAttack(){
         if(Input.GetAxisRaw("Fire1") == 1){
@@ -132,5 +141,4 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(OnHitBuffTime);
         invincible = false;
     }
-
 }
