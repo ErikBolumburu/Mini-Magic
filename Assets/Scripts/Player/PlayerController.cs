@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -120,7 +121,7 @@ public class PlayerController : MonoBehaviour
     void RestartOrQuit(){
         if(isDead){
             if(Input.GetKeyDown(KeyCode.R)){
-                Debug.Log("Try Again");
+                SceneManager.LoadScene("Necromancer_Boss");
             }
             else if(Input.GetKeyDown(KeyCode.Q)){
                 Application.Quit();

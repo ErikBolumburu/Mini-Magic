@@ -6,7 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/Main Menu.unity
+    guid: 8ce28dde8ff4d981c9bf3b9e3ca1f4e9
+  - enabled: 1
+    path: Assets/Scenes/Levels.unity
+    guid: a6e840b99d6d337049e409ca88308e5c
+  - enabled: 1
+    path: Assets/Scenes/Necromancer_Boss.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 890945eb4dcead73ba398185a4912c4c, type: 2}
