@@ -9,6 +9,7 @@ TagManager:
   - DeathScreen
   - Boss Targets
   - VictoryScreen
+  - Enemy
   layers:
   - Default
   - TransparentFX

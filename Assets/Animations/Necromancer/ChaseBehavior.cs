@@ -17,6 +17,7 @@ public class ChaseBehavior : StateMachineBehaviour
     private GameObject boss;
     private GameObject player;
     private float step;
+    private Transform attackSource;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -24,16 +25,21 @@ public class ChaseBehavior : StateMachineBehaviour
         timer = Random.Range(minTime, maxTime);
         boss = GameObject.FindGameObjectsWithTag("Boss")[0];
         player = GameObject.FindGameObjectsWithTag("Player")[0];
-        step = chaseSpeed * Time.deltaTime;
+        attackSource = GameObject.Find("AttackSource").GetComponent<Transform>();
 
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        step = chaseSpeed * Time.deltaTime;
         if (timer <= 0)
         {
-            animator.SetTrigger("Spinning");
+            int random = Random.Range(0,2);
+            if(random == 0)
+                animator.SetTrigger("Spinning");
+            else if(random == 1)
+                animator.SetTrigger("SummonSkeletons");
         }
         else
         {
@@ -48,7 +54,7 @@ public class ChaseBehavior : StateMachineBehaviour
 
     void CheckIfTimeToFire(){
         if(Time.time > nextFire){
-            GameObject bulletGO = Instantiate(bullet, boss.transform.position, Quaternion.identity);
+            GameObject bulletGO = Instantiate(bullet, attackSource.position, Quaternion.identity);
             bulletGO.GetComponent<EnemyBullet>().directBullet(player.transform);
             nextFire = Time.time + fireRate;
         }

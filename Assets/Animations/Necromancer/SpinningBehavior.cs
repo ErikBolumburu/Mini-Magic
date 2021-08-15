@@ -14,6 +14,7 @@ public class SpinningBehavior : StateMachineBehaviour
     private GameObject boss;
     private GameObject player;
     private Transform[] targets;
+    private Transform attackSource;
     
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -21,6 +22,7 @@ public class SpinningBehavior : StateMachineBehaviour
         timer = Random.Range(minTime, maxTime);
         boss = GameObject.FindGameObjectsWithTag("Boss")[0];
         player = GameObject.FindGameObjectsWithTag("Player")[0];
+        attackSource = GameObject.Find("AttackSource").GetComponent<Transform>();
 
         targets = new Transform[4];
 
@@ -28,6 +30,7 @@ public class SpinningBehavior : StateMachineBehaviour
         targets[1] = GameObject.Find("2").transform;
         targets[2] = GameObject.Find("3").transform;
         targets[3] = GameObject.Find("4").transform;
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -35,7 +38,11 @@ public class SpinningBehavior : StateMachineBehaviour
     {
         if (timer <= 0)
         {
-            animator.SetTrigger("Chase");
+            int random = Random.Range(0,2);
+            if(random == 0)
+                animator.SetTrigger("Chase");
+            else if(random == 1)
+                animator.SetTrigger("SummonSkeletons");
         }
         else
         {
@@ -49,7 +56,7 @@ public class SpinningBehavior : StateMachineBehaviour
         if(Time.time > nextFire){
             for (int i = 0; i < 4; i++)
             {
-                GameObject bulletGO = Instantiate(bullet, boss.transform.position, Quaternion.identity);
+                GameObject bulletGO = Instantiate(bullet, attackSource.position, Quaternion.identity);
                 bulletGO.GetComponent<EnemyBullet>().directBullet(targets[i]);
                 nextFire = Time.time + fireRate;
             }

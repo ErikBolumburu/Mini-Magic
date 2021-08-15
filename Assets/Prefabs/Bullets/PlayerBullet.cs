@@ -11,6 +11,7 @@ public class PlayerBullet : MonoBehaviour
    private Vector2 mousePos;
    private Vector2 shootDirection;
 
+
     public void Start() {
         rb = GetComponent<Rigidbody2D>();
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -25,7 +26,7 @@ public class PlayerBullet : MonoBehaviour
    }
 
     void OnTriggerEnter2D(Collider2D col){
-        if(col.gameObject.tag.Equals("Boss")){
+        if(col.gameObject.tag.Equals("Boss") || col.gameObject.tag.Equals("Enemy")){
             col.GetComponent<Enemy>().DamageEnemy(bulletDamage);
             Destroy(gameObject);
         }
